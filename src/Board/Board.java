@@ -24,6 +24,7 @@ public class Board {
         ------------------
         First square is numbered after "11".
      */
+    public static final int MAX_SQUARE_ID = 32;
 
     private Map<Integer, Square> occupiedByRed;
     private static final int[] INITIAL_RED_POSITIONS_ID =

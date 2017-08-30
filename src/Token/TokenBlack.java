@@ -33,7 +33,8 @@ public class TokenBlack extends Token {
 
     public boolean canMoveForwardLeft(Board board) {
 
-        int possibleDestination = BLACK.getOffsetForwardLeft();
+        int possibleDestination
+                = (this.getCurrentSquareIdentifier() + BLACK.getOffsetForwardLeft()) % Board.MAX_SQUARE_ID;
 
         if (!board.isOccupied(possibleDestination)) {
             return true;
@@ -42,14 +43,29 @@ public class TokenBlack extends Token {
         } else {
             assert board.isOccupiedByRed(possibleDestination);
             return (
-                !board.isOccupied(possibleDestination + BLACK.getOffsetForwardLeft())
+                    !board.isOccupied(
+                            (possibleDestination + BLACK.getOffsetForwardLeft()) % Board.MAX_SQUARE_ID
+                    )
             );
         }
     }
 
     public boolean canMoveForwardRight(Board board) {
-        // TODO: Completar
-        return false;
+        int possibleDestination
+                = (this.getCurrentSquareIdentifier() + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID;
+
+        if (!board.isOccupied(possibleDestination)) {
+            return true;
+        } else if (board.isOccupiedByBlack(possibleDestination)) {
+            return false;
+        } else {
+            assert board.isOccupiedByRed(possibleDestination);
+            return (
+                    !board.isOccupied(
+                            (possibleDestination + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID
+                    )
+            );
+        }
     }
 
     @Override
