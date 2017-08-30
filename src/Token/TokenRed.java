@@ -5,10 +5,12 @@ import Board.Move;
 
 import java.util.List;
 
+import static Token.Color.RED;
+
 public class TokenRed extends Token {
 
-    public TokenRed(boolean isKing) {
-        super(isKing);
+    public TokenRed(boolean isKing, int currentSquareIdentifier) {
+        super(isKing, currentSquareIdentifier, RED, RED.getDirection());
     }
 
     @Override
