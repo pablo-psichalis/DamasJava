@@ -20,7 +20,7 @@ public class TokenRed extends Token {
     }
 
     @Override
-    public boolean canCapture(Token t) {
+    public boolean canCapture(int squareIdentifier) {
         // TODO: completar canCapture
         return false;
     }

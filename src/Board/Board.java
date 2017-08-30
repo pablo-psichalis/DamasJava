@@ -2,12 +2,11 @@ package Board;
 
 import Token.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Board {
-
 
     // Current token disposition and gamemode: "Spanish Draughts" way
 
@@ -26,7 +25,7 @@ public class Board {
         First square is numbered after "11".
      */
 
-    private List<Square> occupiedByRed;
+    private Map<Integer, Square> occupiedByRed;
     private static final int[] INITIAL_RED_POSITIONS_ID =
             {
                     11, 5, 31, 25,
@@ -34,7 +33,7 @@ public class Board {
                     3, 29, 23, 17
             };
 
-    private List<Square> occupiedByBlack;
+    private Map<Integer, Square> occupiedByBlack;
     private static final int[] INITIAL_BLACK_POSITIONS_ID =
             {
                     26, 20, 14, 8,
@@ -42,41 +41,48 @@ public class Board {
                     18, 12, 6, 0
             };
 
-    private List<Square> emptySquares;
+    private Map<Integer, Square> emptySquares;
     private static final int[] INITIAL_EMPTY_POSITIONS_ID = {12, 13, 14, 15, 16, 17, 18, 19};
 
     // TODO: Optimizar rendimiento implementando un Bitboard como estructura de datos para el tablero
 
     public Board() {
-        occupiedByRed = new ArrayList<>();
-        occupiedByBlack = new ArrayList<>();
-        emptySquares = new ArrayList<>();
+        occupiedByRed = new HashMap<Integer, Square>();
+        occupiedByBlack = new HashMap<Integer, Square>();
+        emptySquares = new HashMap<Integer, Square>();
 
         initializeBoard();
     }
 
     public void initializeBoard() {
         for (int id : INITIAL_RED_POSITIONS_ID) {
-            occupiedByRed.add(new Square(id, new TokenRed(false, id)));
+            occupiedByRed.put(INITIAL_RED_POSITIONS_ID[id], new Square(id, new TokenRed(false, id)));
         }
 
         for (int id : INITIAL_BLACK_POSITIONS_ID) {
-            occupiedByBlack.add(new Square(id, new TokenBlack(false, id)));
+            occupiedByBlack.put(INITIAL_BLACK_POSITIONS_ID[id], new Square(id, new TokenBlack(false, id)));
         }
 
         for (int id : INITIAL_EMPTY_POSITIONS_ID) {
-            emptySquares.add(new Square(id, null));
+            emptySquares.put(INITIAL_EMPTY_POSITIONS_ID[id], new Square(id, null));
         }
     }
 
-    public boolean isOccupied(Square square) {
-        return (emptySquares.contains(square));
+    public boolean isOccupied(int squareId) {
+        return (!emptySquares.containsKey(squareId));
     }
 
+    public boolean isOccupiedByBlack(int squareId) {
+        return (occupiedByBlack.containsKey(squareId));
+    }
 
-    public List<Square> getOccupiedByRed() { return occupiedByRed; }
+    public boolean isOccupiedByRed(int squareId) {
+        return (occupiedByRed.containsKey(squareId));
+    }
 
-    public List<Square> getOccupiedByBlack() { return occupiedByBlack; }
+    public Map<Integer, Square> getOccupiedByRed() { return occupiedByRed; }
 
-    public List<Square> getEmptySquares() { return emptySquares; }
+    public Map<Integer, Square> getOccupiedByBlack() { return occupiedByBlack; }
+
+    public Map<Integer, Square> getEmptySquares() { return emptySquares; }
 }

@@ -23,6 +23,8 @@ public final class Square {
         return token;
     }
 
+    public int getSquareIdentifier() { return squareIdentifier; }
+
     public boolean equals(Square s) {
         return this.squareIdentifier == s.squareIdentifier &&
                 this.token.equals(s.token);

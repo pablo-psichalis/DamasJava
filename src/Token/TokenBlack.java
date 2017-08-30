@@ -1,6 +1,7 @@
 package Token;
 
 import Board.Board;
+import Board.Square;
 import Board.Move;
 
 import java.util.ArrayList;
@@ -27,13 +28,23 @@ public class TokenBlack extends Token {
 
         }
 */
-
         return null;
     }
 
     public boolean canMoveForwardLeft(Board board) {
-        // TODO: Completar
-        return false;
+
+        int possibleDestination = BLACK.getOffsetForwardLeft();
+
+        if (!board.isOccupied(possibleDestination)) {
+            return true;
+        } else if (board.isOccupiedByBlack(possibleDestination)) {
+            return false;
+        } else {
+            assert board.isOccupiedByRed(possibleDestination);
+            return (
+                !board.isOccupied(possibleDestination + BLACK.getOffsetForwardLeft())
+            );
+        }
     }
 
     public boolean canMoveForwardRight(Board board) {
@@ -41,9 +52,8 @@ public class TokenBlack extends Token {
         return false;
     }
 
-
     @Override
-    public boolean canCapture(Token t) {
+    public boolean canCapture(int squareIdentifier) {
         // TODO: completar canCapture
         return false;
     }
