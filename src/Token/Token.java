@@ -23,7 +23,7 @@ public abstract class Token {
     /**
      * Returns true if the supplied Piece belongs to a Player other than this Piece's Player. false otherwise.
      */
-    public abstract boolean canCapture(int squareIdentifier);
+    public abstract boolean canCapture(int squareIdentifier, Board board);
 
     public abstract List<Move> calculateLegalMoves(Board board);
 
