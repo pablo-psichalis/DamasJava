@@ -24,7 +24,11 @@ public class Board {
         ------------------
         First square is numbered after "11".
      */
+
     public static final int MAX_SQUARE_ID = 32;
+    public static final int NUM_ROWS = 8;
+    public static final int NUM_COLUMNS = 8;
+
 
     private Map<Integer, Square> occupiedByRed;
     private static final int[] INITIAL_RED_POSITIONS_ID =
@@ -43,7 +47,11 @@ public class Board {
             };
 
     private Map<Integer, Square> emptySquares;
-    private static final int[] INITIAL_EMPTY_POSITIONS_ID = {12, 13, 14, 15, 16, 17, 18, 19};
+    private static final int[] INITIAL_EMPTY_POSITIONS_ID =
+            {
+                2, 28, 22, 16,
+                27, 21, 15, 9
+            };
 
     // TODO: Optimizar rendimiento implementando un Bitboard como estructura de datos para el tablero
 
@@ -55,17 +63,17 @@ public class Board {
         initializeBoard();
     }
 
-    public void initializeBoard() {
-        for (int id : INITIAL_RED_POSITIONS_ID) {
-            occupiedByRed.put(INITIAL_RED_POSITIONS_ID[id], new Square(id, new TokenRed(false, id)));
+    private void initializeBoard() {
+        for (int i=0; i<INITIAL_RED_POSITIONS_ID.length; i++) {
+            occupiedByRed.put(INITIAL_RED_POSITIONS_ID[i], new Square(i, new TokenRed(false, i)));
         }
 
-        for (int id : INITIAL_BLACK_POSITIONS_ID) {
-            occupiedByBlack.put(INITIAL_BLACK_POSITIONS_ID[id], new Square(id, new TokenBlack(false, id)));
+        for (int i=0; i<INITIAL_BLACK_POSITIONS_ID.length; i++) {
+            occupiedByBlack.put(INITIAL_BLACK_POSITIONS_ID[i], new Square(i, new TokenBlack(false, i)));
         }
 
-        for (int id : INITIAL_EMPTY_POSITIONS_ID) {
-            emptySquares.put(INITIAL_EMPTY_POSITIONS_ID[id], new Square(id, null));
+        for (int i=0; i<INITIAL_EMPTY_POSITIONS_ID.length; i++) {
+            emptySquares.put(INITIAL_EMPTY_POSITIONS_ID[i], new Square(i, null));
         }
     }
 
