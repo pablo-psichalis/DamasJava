@@ -21,7 +21,9 @@ public abstract class Token {
     }
 
     /**
-     * Returns true if the supplied Piece belongs to a Player other than this Piece's Player. false otherwise.
+     * Returns true if the Token contained in the supplied square
+     * from the given board has a colour different from
+     * this Token's colour. False otherwise.
      */
     public abstract boolean canCapture(int squareIdentifier, Board board);
 

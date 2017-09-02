@@ -68,11 +68,6 @@ public class TokenBlack extends Token {
         }
     }
 
-    /**
-     * Returns true if the Token contained in the supplied square
-     * from the given board has a colour different from
-     * this Token's colour. False otherwise.
-     */
     public boolean canCapture(int tokenSquareId, Board board) {
         if(board.getOccupiedByRed().containsKey(tokenSquareId)){
             return true;
