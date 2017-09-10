@@ -26,7 +26,9 @@ public class Damas {
 
         int i = 0;
 
+        System.out.println("  A B C D E F G H");
         for (int row = 0; row < Board.NUM_ROWS; row++) {
+            System.out.print(row+1);
             if (row % 2 == 0) {
                 for (int col = 0; col < Board.NUM_COLUMNS; col += 2, i++) {
                     System.out.print("| ");
