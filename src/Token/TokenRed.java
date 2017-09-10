@@ -3,6 +3,7 @@ package Token;
 import Board.Board;
 import Board.Move;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static Token.Color.RED;
@@ -14,16 +15,14 @@ public class TokenRed extends Token {
     }
 
     @Override
-    public List<Move> calculateLegalMoves(Board board) {
-        // TODO: completar calculateLegalMoves
-        return null;
-    }
-
-    @Override
     public boolean canCapture(int squareIdentifier, Board board) {
         // TODO: completar canCapture
         return false;
     }
 
+    @Override
+    public void calculateLegalMoves(int curSquare, Board board, ArrayList<Move> moveList) {
+
+    }
 
 }

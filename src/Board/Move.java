@@ -2,10 +2,10 @@ package Board;
 
 public class Move {
 
-    private Square origin;
-    private Square destination;
+    private int origin;
+    private int destination;
 
-    public Move(Square origin, Square destination) {
+    public Move(int origin, int destination) {
         this.origin = origin;
         this.destination = destination;
     }

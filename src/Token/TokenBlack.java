@@ -16,19 +16,38 @@ public class TokenBlack extends Token {
     }
 
     @Override
-    public List<Move> calculateLegalMoves(Board board) {
-        // TODO: completar calculateLegalMoves
+    public void calculateLegalMoves(int curSquare, Board board, ArrayList<Move> moveList) {
 
-/*      int curSquareId = this.getCurrentSquareIdentifier();
-        List<Move> candidates = new ArrayList<Move>();
-
-        if (!isKing()) {
-
-        } else {
-
+        if (canMoveForwardLeft(board)) {
+            moveList.add(
+                    new Move(curSquare, curSquare + BLACK.getOffsetForwardLeft() % Board.MAX_SQUARE_ID)
+            );
         }
-*/
-        return null;
+
+        if (canMoveForwardRight(board)) {
+            moveList.add(
+                    new Move(curSquare, curSquare + BLACK.getOffsetForwardRight() % Board.MAX_SQUARE_ID)
+            );
+        }
+
+        if (canCaptureTokenForwardLeft(board)) {
+
+            int destination = curSquare + ((BLACK.getOffsetForwardLeft() * 2) % Board.MAX_SQUARE_ID);
+            moveList.add(new Move(curSquare, destination));
+
+            calculateLegalMoves(destination, board, moveList);
+        }
+
+        if (canCaptureTokenForwardRight(board)) {
+
+            int destination = curSquare + ((BLACK.getOffsetForwardRight() * 2) % Board.MAX_SQUARE_ID);
+            moveList.add(new Move(curSquare, destination));
+
+            calculateLegalMoves(destination, board, moveList);
+        }
+
+        // TODO: Testar y añadir caso para piezas coronadas
+
     }
 
     public boolean canMoveForwardLeft(Board board) {

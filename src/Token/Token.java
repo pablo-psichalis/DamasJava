@@ -3,6 +3,7 @@ package Token;
 import Board.Move;
 import Board.Board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static Token.Color.BLACK;
@@ -27,7 +28,7 @@ public abstract class Token {
      */
     public abstract boolean canCapture(int squareIdentifier, Board board);
 
-    public abstract List<Move> calculateLegalMoves(Board board);
+    public abstract void calculateLegalMoves(int curSquare, Board board, ArrayList<Move> moveList);
 
 
     public boolean equals(Token t) {
