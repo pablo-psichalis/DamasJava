@@ -1,4 +1,8 @@
 import Board.*;
+import Token.Token;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Damas {
 
@@ -6,6 +10,27 @@ public class Damas {
 
         Board bo = new Board();
         printBoard(bo);
+
+        // Tests calculateLegalMoves()
+
+        ArrayList<Move> moves;
+        Map<Integer, Square> black_tokens = bo.getOccupiedByBlack();
+
+        for (Map.Entry<Integer, Square> entry : black_tokens.entrySet()) {
+            Token cito = entry.getValue().getToken();
+            moves = new ArrayList<Move>();
+            cito.calculateLegalMoves(cito.getCurrentSquareIdentifier(), bo, moves);
+
+            if (moves.isEmpty()) {
+                System.out.println(entry.getKey() + ": no legal moves found");
+            } else {
+                System.out.println(entry.getKey() + ":");
+                for (Move m : moves) {
+                    System.out.println("  found " + m.toString());
+                }
+            }
+
+        }
 
     }
 
@@ -28,7 +53,7 @@ public class Damas {
 
         System.out.println("  A B C D E F G H");
         for (int row = 0; row < Board.NUM_ROWS; row++) {
-            System.out.print(row+1);
+            System.out.print(row + 1);
             if (row % 2 == 0) {
                 for (int col = 0; col < Board.NUM_COLUMNS; col += 2, i++) {
                     System.out.print("| ");

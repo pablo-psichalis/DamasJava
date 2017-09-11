@@ -50,6 +50,8 @@ public class TokenBlack extends Token {
 
     }
 
+
+    // TODO: Comprobar que el movimiento no se sale del tablero! (Ej: Mover del 01 al 02 no es válido!)
     public boolean canMoveForwardLeft(Board board) {
 
         int possibleDestination
@@ -84,8 +86,9 @@ public class TokenBlack extends Token {
         int possibleDestination
                 = (this.getCurrentSquareIdentifier() + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID;
 
-        assert board.isOccupiedByRed(possibleDestination);
         return (
+
+                board.isOccupiedByRed(possibleDestination) &&
                 !board.isOccupied(
                         (possibleDestination + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID
                 )

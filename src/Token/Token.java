@@ -13,7 +13,6 @@ public abstract class Token {
     private boolean isKing;
     private int currentSquareIdentifier;
     private Color color;
-    private int direction;
 
     public Token(boolean isKing, int currentSquareIdentifier, Color color, int direction) {
         this.isKing = isKing;
@@ -35,8 +34,7 @@ public abstract class Token {
 
         return this.isKing == t.isKing &&
                 this.currentSquareIdentifier == t.currentSquareIdentifier &&
-                this.color == t.color &&
-                this.direction == t.direction;
+                this.color == t.color;
     }
 
     public boolean isKing() {

@@ -9,4 +9,9 @@ public class Move {
         this.origin = origin;
         this.destination = destination;
     }
+
+    @Override
+    public String toString() {
+        return "[" + " or:" + origin + " , dst:" + destination + " ]";
+    }
 }

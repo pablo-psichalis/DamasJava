@@ -65,15 +65,18 @@ public class Board {
 
     private void initializeBoard() {
         for (int i=0; i<INITIAL_RED_POSITIONS_ID.length; i++) {
-            occupiedByRed.put(INITIAL_RED_POSITIONS_ID[i], new Square(i, new TokenRed(false, i)));
+            int position_id = INITIAL_RED_POSITIONS_ID[i];
+            occupiedByRed.put(position_id, new Square(position_id, new TokenRed(false, position_id)));
         }
 
         for (int i=0; i<INITIAL_BLACK_POSITIONS_ID.length; i++) {
-            occupiedByBlack.put(INITIAL_BLACK_POSITIONS_ID[i], new Square(i, new TokenBlack(false, i)));
+            int position_id = INITIAL_BLACK_POSITIONS_ID[i];
+            occupiedByBlack.put(position_id, new Square(position_id, new TokenBlack(false, position_id)));
         }
 
         for (int i=0; i<INITIAL_EMPTY_POSITIONS_ID.length; i++) {
-            emptySquares.put(INITIAL_EMPTY_POSITIONS_ID[i], new Square(i, null));
+            int position_id = INITIAL_EMPTY_POSITIONS_ID[i];
+            emptySquares.put(position_id, new Square(position_id,null));
         }
     }
 

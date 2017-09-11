@@ -16,7 +16,6 @@ public class TokenRed extends Token {
 
     @Override
     public boolean canCapture(int squareIdentifier, Board board) {
-        // TODO: completar canCapture
         return false;
     }
 
