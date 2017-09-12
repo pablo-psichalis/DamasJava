@@ -4,9 +4,6 @@ import Board.Move;
 import Board.Board;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static Token.Color.BLACK;
 
 public abstract class Token {
 

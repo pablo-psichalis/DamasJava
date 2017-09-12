@@ -29,8 +29,10 @@ public class Board {
     public static final int NUM_ROWS = 8;
     public static final int NUM_COLUMNS = 8;
 
-
     private Map<Integer, Square> occupiedByRed;
+    private Map<Integer, Square> occupiedByBlack;
+    private Map<Integer, Square> emptySquares;
+
     private static final int[] INITIAL_RED_POSITIONS_ID =
             {
                     11, 5, 31, 25,
@@ -38,7 +40,6 @@ public class Board {
                     3, 29, 23, 17
             };
 
-    private Map<Integer, Square> occupiedByBlack;
     private static final int[] INITIAL_BLACK_POSITIONS_ID =
             {
                     26, 20, 14, 8,
@@ -46,11 +47,10 @@ public class Board {
                     18, 12, 6, 0
             };
 
-    private Map<Integer, Square> emptySquares;
     private static final int[] INITIAL_EMPTY_POSITIONS_ID =
             {
-                2, 28, 22, 16,
-                27, 21, 15, 9
+                    2, 28, 22, 16,
+                    27, 21, 15, 9
             };
 
     // TODO: Optimizar rendimiento implementando un Bitboard como estructura de datos para el tablero
@@ -60,23 +60,31 @@ public class Board {
         occupiedByBlack = new HashMap<Integer, Square>();
         emptySquares = new HashMap<Integer, Square>();
 
-        initializeBoard();
+        initializeBoard(INITIAL_RED_POSITIONS_ID, INITIAL_BLACK_POSITIONS_ID, INITIAL_EMPTY_POSITIONS_ID);
     }
 
-    private void initializeBoard() {
-        for (int i=0; i<INITIAL_RED_POSITIONS_ID.length; i++) {
-            int position_id = INITIAL_RED_POSITIONS_ID[i];
+    public Board(int[] initialRedPositionsID, int[] initialBlackPositionsID, int[] initialEmptyPositionsID) {
+        occupiedByRed = new HashMap<Integer, Square>();
+        occupiedByBlack = new HashMap<Integer, Square>();
+        emptySquares = new HashMap<Integer, Square>();
+
+        initializeBoard(initialRedPositionsID, initialBlackPositionsID, initialEmptyPositionsID);
+    }
+
+    private void initializeBoard(final int[] INITIAL_RED_POSITIONS_ID,
+                                 final int[] INITIAL_BLACK_POSITIONS_ID,
+                                 final int[] INITIAL_EMPTY_POSITIONS_ID)
+    {
+        for (int position_id : INITIAL_RED_POSITIONS_ID) {
             occupiedByRed.put(position_id, new Square(position_id, new TokenRed(false, position_id)));
         }
 
-        for (int i=0; i<INITIAL_BLACK_POSITIONS_ID.length; i++) {
-            int position_id = INITIAL_BLACK_POSITIONS_ID[i];
+        for (int position_id : INITIAL_BLACK_POSITIONS_ID) {
             occupiedByBlack.put(position_id, new Square(position_id, new TokenBlack(false, position_id)));
         }
 
-        for (int i=0; i<INITIAL_EMPTY_POSITIONS_ID.length; i++) {
-            int position_id = INITIAL_EMPTY_POSITIONS_ID[i];
-            emptySquares.put(position_id, new Square(position_id,null));
+        for (int position_id : INITIAL_EMPTY_POSITIONS_ID) {
+            emptySquares.put(position_id, new Square(position_id, null));
         }
     }
 
@@ -96,5 +104,4 @@ public class Board {
 
     public Map<Integer, Square> getOccupiedByBlack() { return occupiedByBlack; }
 
-    public Map<Integer, Square> getEmptySquares() { return emptySquares; }
 }

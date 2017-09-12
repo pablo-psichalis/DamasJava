@@ -8,18 +8,42 @@ public class Damas {
 
     public static void main(String[] args) {
 
-        Board bo = new Board();
-        printBoard(bo);
+        // Tests de calculateLegalMoves()
 
-        // Tests calculateLegalMoves()
+        // Regular board
 
+        Board regular_board = new Board();
+        printBoard(regular_board);
+
+        testCalculateLegalMovesBlack(regular_board);
+
+
+        // Custom board
+
+        final int[] CUST_INITIAL_RED_POSITIONS_ID = {11, 3, 29, 23, 17, 27, 21, 15, 9, 19, 13, 7, 1};
+        final int[] CUST_INITIAL_BLACK_POSITIONS_ID = {5, 31, 25, 30, 18, 12, 6, 0};
+        final int[] CUST_INITIAL_EMPTY_POSITIONS_ID = {10, 4, 24, 2, 28, 22, 16, 26, 20, 14, 8};
+
+        Board custom_board = new Board(
+                CUST_INITIAL_RED_POSITIONS_ID, CUST_INITIAL_BLACK_POSITIONS_ID, CUST_INITIAL_EMPTY_POSITIONS_ID
+        );
+
+        printBoard(custom_board);
+
+        testCalculateLegalMovesBlack(custom_board);
+
+    }
+
+    private static void testCalculateLegalMovesBlack(Board board) {
         ArrayList<Move> moves;
-        Map<Integer, Square> black_tokens = bo.getOccupiedByBlack();
+        Map<Integer, Square> black_tokens = board.getOccupiedByBlack();
+
+        System.out.println();
 
         for (Map.Entry<Integer, Square> entry : black_tokens.entrySet()) {
             Token cito = entry.getValue().getToken();
             moves = new ArrayList<Move>();
-            cito.calculateLegalMoves(cito.getCurrentSquareIdentifier(), bo, moves);
+            cito.calculateLegalMoves(cito.getCurrentSquareIdentifier(), board, moves);
 
             if (moves.isEmpty()) {
                 System.out.println(entry.getKey() + ": no legal moves found");
@@ -31,7 +55,6 @@ public class Damas {
             }
 
         }
-
     }
 
     private static final int[] ALL_SQUARE_IDS =

@@ -4,7 +4,6 @@ import Board.Board;
 import Board.Move;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static Token.Color.RED;
 

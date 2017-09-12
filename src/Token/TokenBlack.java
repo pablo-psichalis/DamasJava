@@ -1,15 +1,19 @@
 package Token;
 
 import Board.Board;
-import Board.Square;
 import Board.Move;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static Token.Color.BLACK;
 
 public class TokenBlack extends Token {
+
+    private static final Set<Integer> squaresAtBorderForwardLeft =
+            new HashSet<>(Arrays.asList(18, 26, 2, 10, 11, 5, 31, 25));
+
+    private static final Set<Integer> squaresAtBorderForwardRight =
+            new HashSet<>(Arrays.asList(1, 9, 17, 25, 31, 5, 11));
 
     public TokenBlack(boolean isKing, int currentSquareIdentifier) {
         super(isKing, currentSquareIdentifier, BLACK, BLACK.getDirection());
@@ -18,81 +22,84 @@ public class TokenBlack extends Token {
     @Override
     public void calculateLegalMoves(int curSquare, Board board, ArrayList<Move> moveList) {
 
-        if (canMoveForwardLeft(board)) {
+        if (canMoveForwardLeft(board, curSquare)) {
             moveList.add(
-                    new Move(curSquare, curSquare + BLACK.getOffsetForwardLeft() % Board.MAX_SQUARE_ID)
+                    new Move(curSquare, (curSquare + BLACK.getOffsetForwardLeft()) % Board.MAX_SQUARE_ID)
             );
         }
 
-        if (canMoveForwardRight(board)) {
+        if (canMoveForwardRight(board, curSquare)) {
             moveList.add(
-                    new Move(curSquare, curSquare + BLACK.getOffsetForwardRight() % Board.MAX_SQUARE_ID)
+                    new Move(curSquare, (curSquare + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID)
             );
         }
 
-        if (canCaptureTokenForwardLeft(board)) {
+        if (canCaptureTokenForwardLeft(board, curSquare)) {
 
-            int destination = curSquare + ((BLACK.getOffsetForwardLeft() * 2) % Board.MAX_SQUARE_ID);
+            int destination = (curSquare + (BLACK.getOffsetForwardLeft() * 2)) % Board.MAX_SQUARE_ID;
             moveList.add(new Move(curSquare, destination));
 
             calculateLegalMoves(destination, board, moveList);
         }
 
-        if (canCaptureTokenForwardRight(board)) {
+        if (canCaptureTokenForwardRight(board, curSquare)) {
 
-            int destination = curSquare + ((BLACK.getOffsetForwardRight() * 2) % Board.MAX_SQUARE_ID);
+            int destination = (curSquare + (BLACK.getOffsetForwardRight() * 2)) % Board.MAX_SQUARE_ID;
             moveList.add(new Move(curSquare, destination));
 
             calculateLegalMoves(destination, board, moveList);
         }
 
-        // TODO: Testar y añadir caso para piezas coronadas
+        // TODO: Añadir caso para piezas coronadas
 
     }
 
-
-    // TODO: Comprobar que el movimiento no se sale del tablero! (Ej: Mover del 01 al 02 no es válido!)
-    public boolean canMoveForwardLeft(Board board) {
+    private boolean canMoveForwardLeft(Board board, int currentPos) {
 
         int possibleDestination
-                = (this.getCurrentSquareIdentifier() + BLACK.getOffsetForwardLeft()) % Board.MAX_SQUARE_ID;
+                = (currentPos + BLACK.getOffsetForwardLeft()) % Board.MAX_SQUARE_ID;
 
-        return (!board.isOccupied(possibleDestination));
+        return !squaresAtBorderForwardLeft.contains(currentPos) &&
+                (!board.isOccupied(possibleDestination));
     }
 
-    public boolean canCaptureTokenForwardLeft(Board board) {
+    private boolean canCaptureTokenForwardLeft(Board board, int currentPos) {
 
-        int possibleDestination
-                = (this.getCurrentSquareIdentifier() + BLACK.getOffsetForwardLeft()) % Board.MAX_SQUARE_ID;
+        int enemyTokenPosition =
+                (currentPos + BLACK.getOffsetForwardLeft()) % Board.MAX_SQUARE_ID;
+        int jumpDestination =
+                (currentPos + BLACK.getOffsetForwardLeft() * 2) % Board.MAX_SQUARE_ID;
 
-        assert board.isOccupiedByRed(possibleDestination);
-        return (
+        return  !squaresAtBorderForwardLeft.contains(enemyTokenPosition) &&
+                !squaresAtBorderForwardLeft.contains(currentPos) &&
+                board.isOccupiedByRed(enemyTokenPosition) &&
                 !board.isOccupied(
-                        (possibleDestination + BLACK.getOffsetForwardLeft()) % Board.MAX_SQUARE_ID
-                )
-        );
+                (enemyTokenPosition + BLACK.getOffsetForwardLeft()) % Board.MAX_SQUARE_ID
+                );
     }
 
-    public boolean canMoveForwardRight(Board board) {
+    private boolean canMoveForwardRight(Board board, int currentPos) {
 
         int possibleDestination
-                = (this.getCurrentSquareIdentifier() + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID;
+                = (currentPos + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID;
 
-        return (!board.isOccupied(possibleDestination));
+        return  !squaresAtBorderForwardRight.contains(currentPos) &&
+                !board.isOccupied(possibleDestination);
     }
 
-    public boolean canCaptureTokenForwardRight(Board board) {
+    private boolean canCaptureTokenForwardRight(Board board, int currentPos) {
 
-        int possibleDestination
-                = (this.getCurrentSquareIdentifier() + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID;
+        int enemyTokenPosition
+                = (currentPos + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID;
+        int jumpDestination =
+                (currentPos + BLACK.getOffsetForwardRight() * 2) % Board.MAX_SQUARE_ID;
 
-        return (
-
-                board.isOccupiedByRed(possibleDestination) &&
+        return  !squaresAtBorderForwardRight.contains(enemyTokenPosition) &&
+                !squaresAtBorderForwardRight.contains(currentPos) &&
+                board.isOccupiedByRed(enemyTokenPosition) &&
                 !board.isOccupied(
-                        (possibleDestination + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID
-                )
-        );
+                        (enemyTokenPosition + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID
+                );
     }
 
     public boolean canCapture(int tokenSquareId, Board board) {
