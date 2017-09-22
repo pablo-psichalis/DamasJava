@@ -26,6 +26,8 @@ public abstract class Token {
 
     public abstract void calculateLegalMoves(int curSquare, Board board, ArrayList<Move> moveList);
 
+    public abstract void mover(int posDestino);
+
 
     public boolean equals(Token t) {
 
@@ -39,4 +41,5 @@ public abstract class Token {
     }
 
     public int getCurrentSquareIdentifier() { return currentSquareIdentifier; }
+
 }

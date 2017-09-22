@@ -1,22 +1,26 @@
 import Board.*;
 import Token.Token;
+import Token.Color;
+import Token.TokenBlack;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Damas {
 
+    private Board board;
+    private Turn turn;
+
     public static void main(String[] args) {
+
+        Damas damas = new Damas();
 
         // Tests de calculateLegalMoves()
 
         // Regular board
-
-        Board regular_board = new Board();
-        printBoard(regular_board);
-
-        testCalculateLegalMovesBlack(regular_board);
-
+        damas.printBoard(damas.board);
+        testCalculateLegalMovesBlack(damas.board);
 
         // Custom board
 
@@ -28,33 +32,14 @@ public class Damas {
                 CUST_INITIAL_RED_POSITIONS_ID, CUST_INITIAL_BLACK_POSITIONS_ID, CUST_INITIAL_EMPTY_POSITIONS_ID
         );
 
-        printBoard(custom_board);
-
+        damas.printBoard(custom_board);
         testCalculateLegalMovesBlack(custom_board);
 
     }
 
-    private static void testCalculateLegalMovesBlack(Board board) {
-        ArrayList<Move> moves;
-        Map<Integer, Square> black_tokens = board.getOccupiedByBlack();
-
-        System.out.println();
-
-        for (Map.Entry<Integer, Square> entry : black_tokens.entrySet()) {
-            Token cito = entry.getValue().getToken();
-            moves = new ArrayList<Move>();
-            cito.calculateLegalMoves(cito.getCurrentSquareIdentifier(), board, moves);
-
-            if (moves.isEmpty()) {
-                System.out.println(entry.getKey() + ": no legal moves found");
-            } else {
-                System.out.println(entry.getKey() + ":");
-                for (Move m : moves) {
-                    System.out.println("  found " + m.toString());
-                }
-            }
-
-        }
+    public Damas() {
+        turn = new Turn();
+        board = new Board();
     }
 
     private static final int[] ALL_SQUARE_IDS =
@@ -69,8 +54,7 @@ public class Damas {
                     18, 12, 6, 0
             };
 
-
-    private static void printBoard(Board board) {
+    private void printBoard(Board board) {
 
         int i = 0;
 
@@ -100,6 +84,69 @@ public class Damas {
             System.out.print("|■");
         } else {
             System.out.print("| ");
+        }
+    }
+
+    public void play() {
+        // lógica del juego
+        do {
+            System.out.println(turn.toString() + "'s turn");
+
+            if (turn.getColor() == Color.RED) {
+                boolean finTurno = false;
+                Scanner sc = new Scanner(System.in);
+                ArrayList<Move> moveList = new ArrayList<>();
+
+                do {
+                    // TODO: Refactorizar
+
+                    System.out.print("Choose a Black token: ");
+
+                    if (sc.hasNext("[A-H][1-8]")) {
+                        String input = sc.nextLine();
+                        Integer tokenPos = BoardUtils.coordinateTranslation(input);
+
+                        if ((tokenPos != null) && this.board.isOccupiedByBlack(tokenPos)) {
+
+                            // TODO: Calcular movimientos etc
+
+                        }else{
+                            System.out.println("Invalid coordinates: Out of range or not a black token. Try again.");
+                        }
+                    } else {
+                        System.out.println("Invalid format. Use [Column][Row] (e.g. B1). Try again.");
+                    }
+                } while (!finTurno);
+
+            } else {
+                // TODO: Caso de BLACK (posible refactor)
+            }
+
+            this.turn.switchTurn();
+
+        } while (true); // TODO: Ajustar condición
+    }
+
+    private static void testCalculateLegalMovesBlack(Board board) {
+        ArrayList<Move> moves;
+        Map<Integer, Square> black_tokens = board.getOccupiedByBlack();
+
+        System.out.println();
+
+        for (Map.Entry<Integer, Square> entry : black_tokens.entrySet()) {
+            Token cito = entry.getValue().getToken();
+            moves = new ArrayList<Move>();
+            cito.calculateLegalMoves(cito.getCurrentSquareIdentifier(), board, moves);
+
+            if (moves.isEmpty()) {
+                System.out.println(entry.getKey() + ": no legal moves found");
+            } else {
+                System.out.println(entry.getKey() + ":");
+                for (Move m : moves) {
+                    System.out.println("  found " + m.toString());
+                }
+            }
+
         }
     }
 

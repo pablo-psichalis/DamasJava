@@ -33,25 +33,6 @@ public class Board {
     private Map<Integer, Square> occupiedByBlack;
     private Map<Integer, Square> emptySquares;
 
-    private static final int[] INITIAL_RED_POSITIONS_ID =
-            {
-                    11, 5, 31, 25,
-                    10, 4, 30, 24,
-                    3, 29, 23, 17
-            };
-
-    private static final int[] INITIAL_BLACK_POSITIONS_ID =
-            {
-                    26, 20, 14, 8,
-                    19, 13, 7, 1,
-                    18, 12, 6, 0
-            };
-
-    private static final int[] INITIAL_EMPTY_POSITIONS_ID =
-            {
-                    2, 28, 22, 16,
-                    27, 21, 15, 9
-            };
 
     // TODO: Optimizar rendimiento implementando un Bitboard como estructura de datos para el tablero
 
@@ -60,7 +41,11 @@ public class Board {
         occupiedByBlack = new HashMap<Integer, Square>();
         emptySquares = new HashMap<Integer, Square>();
 
-        initializeBoard(INITIAL_RED_POSITIONS_ID, INITIAL_BLACK_POSITIONS_ID, INITIAL_EMPTY_POSITIONS_ID);
+        initializeBoard(
+                BoardUtils.getInitialRedPositionsId(),
+                BoardUtils.getInitialBlackPositionsId(),
+                BoardUtils.getInitialEmptyPositionsId()
+        );
     }
 
     public Board(int[] initialRedPositionsID, int[] initialBlackPositionsID, int[] initialEmptyPositionsID) {
@@ -103,5 +88,7 @@ public class Board {
     public Map<Integer, Square> getOccupiedByRed() { return occupiedByRed; }
 
     public Map<Integer, Square> getOccupiedByBlack() { return occupiedByBlack; }
+
+
 
 }

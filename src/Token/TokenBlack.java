@@ -19,6 +19,7 @@ public class TokenBlack extends Token {
         super(isKing, currentSquareIdentifier, BLACK, BLACK.getDirection());
     }
 
+
     @Override
     public void calculateLegalMoves(int curSquare, Board board, ArrayList<Move> moveList) {
 
@@ -46,12 +47,13 @@ public class TokenBlack extends Token {
 
             int destination = (curSquare + (BLACK.getOffsetForwardRight() * 2)) % Board.MAX_SQUARE_ID;
             moveList.add(new Move(curSquare, destination));
-
             calculateLegalMoves(destination, board, moveList);
         }
 
         // TODO: Añadir caso para piezas coronadas
+        if(this.isKing()){
 
+        }
     }
 
     private boolean canMoveForwardLeft(Board board, int currentPos) {
@@ -73,9 +75,7 @@ public class TokenBlack extends Token {
         return  !squaresAtBorderForwardLeft.contains(enemyTokenPosition) &&
                 !squaresAtBorderForwardLeft.contains(currentPos) &&
                 board.isOccupiedByRed(enemyTokenPosition) &&
-                !board.isOccupied(
-                (enemyTokenPosition + BLACK.getOffsetForwardLeft()) % Board.MAX_SQUARE_ID
-                );
+                !board.isOccupied(jumpDestination);
     }
 
     private boolean canMoveForwardRight(Board board, int currentPos) {
@@ -97,12 +97,17 @@ public class TokenBlack extends Token {
         return  !squaresAtBorderForwardRight.contains(enemyTokenPosition) &&
                 !squaresAtBorderForwardRight.contains(currentPos) &&
                 board.isOccupiedByRed(enemyTokenPosition) &&
-                !board.isOccupied(
-                        (enemyTokenPosition + BLACK.getOffsetForwardRight()) % Board.MAX_SQUARE_ID
-                );
+                !board.isOccupied(jumpDestination);
     }
 
     public boolean canCapture(int tokenSquareId, Board board) {
         return (board.getOccupiedByRed().containsKey(tokenSquareId));
+    }
+
+    @Override
+    public void mover(int posDestino) {
+        // eliminar token de la pos inicial
+        // comer?
+        //
     }
 }
