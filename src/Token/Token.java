@@ -5,8 +5,6 @@ import Board.Board;
 
 import java.util.ArrayList;
 
-import static Token.Color.BLACK;
-
 public abstract class Token {
 
     private boolean isKing;
@@ -166,7 +164,7 @@ public abstract class Token {
             }
         }
 
-        System.out.println("JumpPath: " + path.toString()); // TODO: Quitar, solo es para testing
+        System.out.println("JumpPath: " + path.toString());
         return path;
     }
 

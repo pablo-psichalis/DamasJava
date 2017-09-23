@@ -1,7 +1,6 @@
 import Board.*;
 import Token.Token;
 import Token.Color;
-import Token.TokenBlack;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -94,33 +93,34 @@ public class Damas {
         do {
             System.out.println(turn.toString() + "'s turn");
 
-            if (turn.getColor() == Color.BLACK) {
-                boolean endTurn = false;
+            boolean endTurn = false;
+            ArrayList<Move> moveList = new ArrayList<>();
+
+            do {
+                // TODO: Refactorizar
+
+                System.out.print("Choose a " + turn.toString() + " token: ");
                 Scanner sc = new Scanner(System.in);
-                ArrayList<Move> moveList = new ArrayList<>();
 
-                do {
-                    // TODO: Refactorizar
+                if (sc.hasNext("[A-H][1-8]")) {
+                    String inputCurPos = sc.nextLine();
+                    sc.reset();
 
-                    System.out.print("Choose a " + turn.toString() + " token: ");
+                    Integer tokenPos = BoardUtils.translateToSquareId(inputCurPos);
 
-                    if (sc.hasNext("[A-H][1-8]")) {
-                        String inputCurPos = sc.nextLine();
-                        sc.reset();
-
-                        Integer tokenPos = BoardUtils.coordinateTranslation(inputCurPos);
-
-                        if ((tokenPos != null) && this.board.isOccupiedByBlack(tokenPos)) {
+                    if (tokenPos != null) {
+                        if ((this.board.isOccupiedByBlack(tokenPos) && this.turn.getColor() == Color.BLACK) ||
+                                (this.board.isOccupiedByRed(tokenPos) && this.turn.getColor() == Color.RED)) {
 
                             this.board.getToken(tokenPos).calculateLegalMoves(tokenPos, board, moveList);
 
-                            if(!moveList.isEmpty()){
+                            if (!moveList.isEmpty()) {
                                 System.out.print("Choose its destination: ");
                                 if (sc.hasNext("[A-H][1-8]")) {
                                     String inputDest = sc.nextLine();
                                     sc.reset();
 
-                                    Integer tokenDestination = BoardUtils.coordinateTranslation(inputDest);
+                                    Integer tokenDestination = BoardUtils.translateToSquareId(inputDest);
 
                                     boolean moveValidated = false;
                                     if (tokenDestination != null) {
@@ -137,29 +137,34 @@ public class Damas {
                                             endTurn = true;
                                         } else {
                                             System.out.println("Illegal move!");
+                                            System.out.println("Legal moves: " + moveList.toString());
                                         }
                                     } else {
-                                        System.out.println("Invalid coordinates: Out of range or not a black token. Try again.");
+                                        System.out.println("Invalid coordinates: Can't move to " + inputDest + "! Try again.");
+                                        System.out.println("Legal moves: " + moveList.toString());
                                     }
+                                } else {
+                                    System.out.println("Invalid format. Use [Column][Row] (e.g. B1). Try again.");
                                 }
 
                             } else {
-                                System.out.println(inputCurPos + " can't perform any legal movement.");
+                                System.out.println("Error: " + inputCurPos + " can't perform any legal movement. Try again.");
                             }
 
                         } else {
-                            System.out.println("Invalid coordinates: Out of range or not a black token. Try again.");
+                            System.out.println("Invalid coordinates: " + inputCurPos + " does not contain a " + turn.toString() + " token. Try again.");
                         }
+
                     } else {
-                        System.out.println("Invalid format. Use [Column][Row] (e.g. B1). Try again.");
+                        System.out.println("Invalid coordinates: " + inputCurPos + " is a non-playable square (and/or out of range). Try again.");
                     }
 
-                    System.out.println("");
-                } while (!endTurn);
+                } else {
+                    System.out.println("Invalid format. Use [Column][Row] (e.g. B1). Try again.");
+                }
 
-            } else {
-                // TODO: Caso de RED (posible refactor)
-            }
+                System.out.println("");
+            } while (!endTurn);
 
             this.turn.switchTurn();
 

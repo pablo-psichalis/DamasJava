@@ -12,7 +12,8 @@ public class Move {
 
     @Override
     public String toString() {
-        return "[" + " or:" + origin + " , dst:" + destination + " ]";
+        return "[" + " or:" + BoardUtils.translateToBoardNotation(origin) +
+                " , dst:" + BoardUtils.translateToBoardNotation(destination) + " ]";
     }
 
     public int getOrigin() {

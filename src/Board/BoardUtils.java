@@ -26,7 +26,7 @@ public enum BoardUtils {
                     27, 21, 15, 9
             };
 
-    private static final Map<String, Integer> coordCorrespondence;
+    private static final Map<String, Integer> squareIdsToBoardNotation;
 
     static {
         HashMap<String, Integer> tempMap = new HashMap<>();
@@ -70,8 +70,56 @@ public enum BoardUtils {
         tempMap.put("E8", 6);
         tempMap.put("G8", 0);
 
-        coordCorrespondence = Collections.unmodifiableMap(tempMap);
+        squareIdsToBoardNotation = Collections.unmodifiableMap(tempMap);
     }
+
+    private static final Map<Integer, String> boardNotationToSquareIds;
+
+    static {
+        HashMap<Integer, String> tempMap = new HashMap<>();
+        tempMap.put(11, "B1");
+        tempMap.put(5, "D1");
+        tempMap.put(31, "F1");
+        tempMap.put(25, "H1");
+
+        tempMap.put(10, "A2");
+        tempMap.put(4, "C2");
+        tempMap.put(50, "E2");
+        tempMap.put(24, "G2");
+
+        tempMap.put(3, "B3");
+        tempMap.put(29, "D3");
+        tempMap.put(23, "F3");
+        tempMap.put(17, "H3");
+
+        tempMap.put(2, "A4");
+        tempMap.put(28, "C4");
+        tempMap.put(22, "E4");
+        tempMap.put(16, "G4");
+
+        tempMap.put(27, "B5");
+        tempMap.put(21, "D5");
+        tempMap.put(15, "F5");
+        tempMap.put(9, "H5");
+
+        tempMap.put(26, "A6");
+        tempMap.put(20, "C6");
+        tempMap.put(14, "E6");
+        tempMap.put(8, "G6");
+
+        tempMap.put(19, "B7");
+        tempMap.put(13, "D7");
+        tempMap.put(7, "F7");
+        tempMap.put(1, "H7");
+
+        tempMap.put(18, "A8");
+        tempMap.put(12, "C8");
+        tempMap.put(6, "E8");
+        tempMap.put(0, "G8");
+
+        boardNotationToSquareIds = Collections.unmodifiableMap(tempMap);
+    }
+
 
     public static int[] getInitialRedPositionsId() { return INITIAL_RED_POSITIONS_ID; }
 
@@ -80,11 +128,15 @@ public enum BoardUtils {
     public static int[] getInitialEmptyPositionsId() { return INITIAL_EMPTY_POSITIONS_ID; }
 
     /**
-     *  Translates square coordinates from the format [Column][Row] (e.g. B1, D3)
-     *  to the corresponding square identifier (0,1, ... ,31).
-     *  Returns null if the input coordinates are invalid.
+     * Translates square coordinates from the format [Column][Row] (e.g. B1, D3)
+     * to the corresponding square identifier (0,1, ... ,31).
+     * Returns null if the input coordinates are invalid.
      */
-    public static Integer coordinateTranslation(String coordinates) {
-        return coordCorrespondence.getOrDefault(coordinates, null);
+    public static Integer translateToSquareId(String coordinates) {
+        return squareIdsToBoardNotation.getOrDefault(coordinates, null);
+    }
+
+    public static String translateToBoardNotation(int squareId) {
+        return boardNotationToSquareIds.getOrDefault(squareId, null);
     }
 }
