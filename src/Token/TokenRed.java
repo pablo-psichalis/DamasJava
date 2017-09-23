@@ -18,17 +18,12 @@ public class TokenRed extends Token {
     }
 
     @Override
-    public boolean canCapture(Board board, int squareIdentifier) {
-        return false;
-    }
-
-    @Override
     public void calculateLegalMoves(int curSquare, Board board, ArrayList<Move> moveList) {
 
     }
 
     @Override
-    public void move(Board board, int destination) {
+    public void move(Board board, int destination, ArrayList<Move> moveList) {
 
     }
 

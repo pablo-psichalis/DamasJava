@@ -40,7 +40,7 @@ public class Damas {
 
     }
 
-    public Damas() {
+    private Damas() {
         turn = new Turn();
         board = new Board();
     }
@@ -90,7 +90,7 @@ public class Damas {
         }
     }
 
-    public void play() {
+    private void play() {
         do {
             System.out.println(turn.toString() + "'s turn");
 
@@ -132,7 +132,8 @@ public class Damas {
                                         }
 
                                         if (moveValidated) {
-                                            this.board.getToken(tokenPos).move(board, tokenDestination);
+                                            this.board.getToken(tokenPos).move(board, tokenDestination, moveList);
+                                            this.printBoard(board);
                                             finTurno = true;
                                         } else {
                                             System.out.println("Illegal move!");

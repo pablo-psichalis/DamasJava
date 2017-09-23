@@ -52,9 +52,10 @@ public class TokenBlack extends Token {
         }
 
         // TODO: Añadir caso para piezas coronadas
-        if (this.isKing()) {
+/*        if (this.isKing()) {
 
         }
+*/
     }
 
     private boolean canMoveForwardLeft(Board board, int currentPos) {
@@ -101,8 +102,28 @@ public class TokenBlack extends Token {
                 !board.isOccupied(jumpDestination);
     }
 
-    public boolean canCapture(Board board, int tokenSquareId) {
-        return (board.getOccupiedByRed().containsKey(tokenSquareId));
+    public ArrayList<Move> jumpPathUntil(int destination, ArrayList<Move> moveList, Board board) {
+
+        ArrayList<Move> path = new ArrayList<>();
+        ArrayList<Move> remainingMoves = (ArrayList<Move>) moveList.clone();
+
+        int initialPos = this.getCurrentSquareIdentifier();
+        int temp = destination;
+
+        while ((temp != initialPos) && (remainingMoves.size() > 0)) {
+            boolean found = false;
+            for (int i = 0; i < remainingMoves.size() && !found; i++) {
+                if (remainingMoves.get(i).getDestination() == temp) {
+                    path.add(0, remainingMoves.get(i));
+                    temp = remainingMoves.get(i).getOrigin();
+                    remainingMoves.remove(i);
+                    found = true;
+                }
+            }
+        }
+
+        System.out.println("JumpPath: " + path.toString()); // TODO: Quitar, solo es para testing
+        return path;
     }
 
     public boolean canMove(Board board, int destination) {
@@ -122,15 +143,12 @@ public class TokenBlack extends Token {
     }
 
     /**
-     * @param board
-     * @param destination
-     *
-     * If the token can somehow move to the destination in the given board,
-     * performs the move updating the board accordingly.
-     * This includes simple movements and captures.
+     *  If the token can somehow move to the destination in the given board,
+     *  performs the move updating the board accordingly.
+     *  This includes simple movements and captures.
      */
     @Override
-    public void move(Board board, int destination) {
+    public void move(Board board, int destination, ArrayList<Move> moveList) {
 
         int initialPos = this.getCurrentSquareIdentifier();
 
@@ -140,7 +158,9 @@ public class TokenBlack extends Token {
             board.getOccupiedByBlack().put(destination, new Square(destination, this));
             this.setCurrentSquareIdentifier(destination);
 
-        } else if (canCapture(board, destination)) {
+            System.out.println("Board updated!");
+
+        } else if (!jumpPathUntil(destination, moveList, board).isEmpty()) {
             // TODO: Caso de las capturas; updatear tablero para saltos de varias fichas
         }
     }
