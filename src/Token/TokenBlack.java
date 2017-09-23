@@ -153,9 +153,13 @@ public class TokenBlack extends Token {
         int initialPos = this.getCurrentSquareIdentifier();
 
         if (canMove(board, destination)) {
+
             board.getOccupiedByBlack().remove(initialPos);
             board.getEmptySquares().put(initialPos, new Square(initialPos, null));
+
             board.getOccupiedByBlack().put(destination, new Square(destination, this));
+            board.getEmptySquares().remove(destination);
+
             this.setCurrentSquareIdentifier(destination);
 
             System.out.println("Board updated!");

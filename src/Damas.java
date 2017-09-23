@@ -95,7 +95,7 @@ public class Damas {
             System.out.println(turn.toString() + "'s turn");
 
             if (turn.getColor() == Color.BLACK) {
-                boolean finTurno = false;
+                boolean endTurn = false;
                 Scanner sc = new Scanner(System.in);
                 ArrayList<Move> moveList = new ArrayList<>();
 
@@ -114,7 +114,7 @@ public class Damas {
 
                             this.board.getToken(tokenPos).calculateLegalMoves(tokenPos, board, moveList);
 
-                            do {
+                            if(!moveList.isEmpty()){
                                 System.out.print("Choose its destination: ");
                                 if (sc.hasNext("[A-H][1-8]")) {
                                     String inputDest = sc.nextLine();
@@ -134,7 +134,7 @@ public class Damas {
                                         if (moveValidated) {
                                             this.board.getToken(tokenPos).move(board, tokenDestination, moveList);
                                             this.printBoard(board);
-                                            finTurno = true;
+                                            endTurn = true;
                                         } else {
                                             System.out.println("Illegal move!");
                                         }
@@ -143,7 +143,9 @@ public class Damas {
                                     }
                                 }
 
-                            } while (!finTurno);
+                            } else {
+                                System.out.println(inputCurPos + " can't perform any legal movement.");
+                            }
 
                         } else {
                             System.out.println("Invalid coordinates: Out of range or not a black token. Try again.");
@@ -151,7 +153,9 @@ public class Damas {
                     } else {
                         System.out.println("Invalid format. Use [Column][Row] (e.g. B1). Try again.");
                     }
-                } while (!finTurno);
+
+                    System.out.println("");
+                } while (!endTurn);
 
             } else {
                 // TODO: Caso de RED (posible refactor)
