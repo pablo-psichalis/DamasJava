@@ -102,7 +102,7 @@ public class Damas {
                 do {
                     // TODO: Refactorizar
 
-                    System.out.print("Choose a Black token: ");
+                    System.out.print("Choose a " + turn.toString() + " token: ");
 
                     if (sc.hasNext("[A-H][1-8]")) {
                         String inputCurPos = sc.nextLine();

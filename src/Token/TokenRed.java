@@ -10,7 +10,7 @@ import static Token.Color.RED;
 public class TokenRed extends Token {
 
     public TokenRed(boolean isKing, int currentSquareIdentifier) {
-        super(isKing, currentSquareIdentifier, RED, RED.getDirection());
+        super(isKing, currentSquareIdentifier, RED);
     }
 
     public boolean canCapture(int squareIdentifier, Board board) {
