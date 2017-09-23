@@ -14,4 +14,12 @@ public class Move {
     public String toString() {
         return "[" + " or:" + origin + " , dst:" + destination + " ]";
     }
+
+    public int getOrigin() {
+        return origin;
+    }
+
+    public int getDestination() {
+        return destination;
+    }
 }

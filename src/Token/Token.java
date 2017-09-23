@@ -22,12 +22,11 @@ public abstract class Token {
      * from the given board has a colour different from
      * this Token's colour. False otherwise.
      */
-    public abstract boolean canCapture(int squareIdentifier, Board board);
+    public abstract boolean canCapture(Board board, int squareIdentifier);
 
     public abstract void calculateLegalMoves(int curSquare, Board board, ArrayList<Move> moveList);
 
-    public abstract void mover(int posDestino);
-
+    public abstract void move(Board board, int destination);
 
     public boolean equals(Token t) {
 
@@ -40,6 +39,13 @@ public abstract class Token {
         return this.isKing;
     }
 
-    public int getCurrentSquareIdentifier() { return currentSquareIdentifier; }
+    public int getCurrentSquareIdentifier() {
+        return currentSquareIdentifier;
+    }
+
+    public void setCurrentSquareIdentifier(int currentSquareIdentifier) {
+        this.currentSquareIdentifier = currentSquareIdentifier;
+    }
+
 
 }

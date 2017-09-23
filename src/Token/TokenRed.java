@@ -13,13 +13,22 @@ public class TokenRed extends Token {
         super(isKing, currentSquareIdentifier, RED, RED.getDirection());
     }
 
-    @Override
     public boolean canCapture(int squareIdentifier, Board board) {
         return false;
     }
 
     @Override
+    public boolean canCapture(Board board, int squareIdentifier) {
+        return false;
+    }
+
+    @Override
     public void calculateLegalMoves(int curSquare, Board board, ArrayList<Move> moveList) {
+
+    }
+
+    @Override
+    public void move(Board board, int destination) {
 
     }
 

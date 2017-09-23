@@ -6,7 +6,8 @@ public class Turn {
 
     private Color color;
 
-    public Turn() {this.color = Color.RED;} // Red starts by default
+    public Turn() {this.color = Color.BLACK;}
+    // TODO: Cambiar: Red starts by default!!
 
     public Turn(Color color) {this.color = color;}
 

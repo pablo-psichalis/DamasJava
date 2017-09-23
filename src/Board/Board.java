@@ -58,8 +58,7 @@ public class Board {
 
     private void initializeBoard(final int[] INITIAL_RED_POSITIONS_ID,
                                  final int[] INITIAL_BLACK_POSITIONS_ID,
-                                 final int[] INITIAL_EMPTY_POSITIONS_ID)
-    {
+                                 final int[] INITIAL_EMPTY_POSITIONS_ID) {
         for (int position_id : INITIAL_RED_POSITIONS_ID) {
             occupiedByRed.put(position_id, new Square(position_id, new TokenRed(false, position_id)));
         }
@@ -85,10 +84,27 @@ public class Board {
         return (occupiedByRed.containsKey(squareId));
     }
 
-    public Map<Integer, Square> getOccupiedByRed() { return occupiedByRed; }
+    public Map<Integer, Square> getOccupiedByRed() {
+        return occupiedByRed;
+    }
 
-    public Map<Integer, Square> getOccupiedByBlack() { return occupiedByBlack; }
+    public Map<Integer, Square> getOccupiedByBlack() {
+        return occupiedByBlack;
+    }
 
+    public Map<Integer, Square> getEmptySquares() {
+        return emptySquares;
+    }
+
+    public Token getToken(int squareId) {
+        if (this.occupiedByRed.containsKey(squareId)) {
+            return this.occupiedByRed.get(squareId).getToken();
+        } else if (this.occupiedByBlack.containsKey(squareId)) {
+            return this.occupiedByBlack.get(squareId).getToken();
+        } else {
+            return null;
+        }
+    }
 
 
 }

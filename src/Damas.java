@@ -20,7 +20,7 @@ public class Damas {
 
         // Regular board
         damas.printBoard(damas.board);
-        testCalculateLegalMovesBlack(damas.board);
+/*        testCalculateLegalMovesBlack(damas.board);
 
         // Custom board
 
@@ -33,7 +33,10 @@ public class Damas {
         );
 
         damas.printBoard(custom_board);
-        testCalculateLegalMovesBlack(custom_board);
+        testCalculateLegalMovesBlack(custom_board);*/
+
+
+        damas.play();
 
     }
 
@@ -88,11 +91,10 @@ public class Damas {
     }
 
     public void play() {
-        // lógica del juego
         do {
             System.out.println(turn.toString() + "'s turn");
 
-            if (turn.getColor() == Color.RED) {
+            if (turn.getColor() == Color.BLACK) {
                 boolean finTurno = false;
                 Scanner sc = new Scanner(System.in);
                 ArrayList<Move> moveList = new ArrayList<>();
@@ -103,14 +105,46 @@ public class Damas {
                     System.out.print("Choose a Black token: ");
 
                     if (sc.hasNext("[A-H][1-8]")) {
-                        String input = sc.nextLine();
-                        Integer tokenPos = BoardUtils.coordinateTranslation(input);
+                        String inputCurPos = sc.nextLine();
+                        sc.reset();
+
+                        Integer tokenPos = BoardUtils.coordinateTranslation(inputCurPos);
 
                         if ((tokenPos != null) && this.board.isOccupiedByBlack(tokenPos)) {
 
-                            // TODO: Calcular movimientos etc
+                            this.board.getToken(tokenPos).calculateLegalMoves(tokenPos, board, moveList);
 
-                        }else{
+                            do {
+                                System.out.print("Choose its destination: ");
+                                if (sc.hasNext("[A-H][1-8]")) {
+                                    String inputDest = sc.nextLine();
+                                    sc.reset();
+
+                                    Integer tokenDestination = BoardUtils.coordinateTranslation(inputDest);
+
+                                    boolean moveValidated = false;
+                                    if (tokenDestination != null) {
+                                        for (int i = 0; i < moveList.size() && !moveValidated; i++) {
+                                            if (moveList.get(i).getDestination() == tokenDestination) {
+                                                System.out.println("Valid move!");
+                                                moveValidated = true;
+                                            }
+                                        }
+
+                                        if (moveValidated) {
+                                            this.board.getToken(tokenPos).move(board, tokenDestination);
+                                            finTurno = true;
+                                        } else {
+                                            System.out.println("Illegal move!");
+                                        }
+                                    } else {
+                                        System.out.println("Invalid coordinates: Out of range or not a black token. Try again.");
+                                    }
+                                }
+
+                            } while (!finTurno);
+
+                        } else {
                             System.out.println("Invalid coordinates: Out of range or not a black token. Try again.");
                         }
                     } else {
@@ -119,7 +153,7 @@ public class Damas {
                 } while (!finTurno);
 
             } else {
-                // TODO: Caso de BLACK (posible refactor)
+                // TODO: Caso de RED (posible refactor)
             }
 
             this.turn.switchTurn();
