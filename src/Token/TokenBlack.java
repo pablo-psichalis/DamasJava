@@ -38,6 +38,7 @@ public class TokenBlack extends Token {
 
         } else if (!jumpPathUntil(destination, moveList, board).isEmpty()) {
             // TODO: Caso de las capturas; updatear tablero para saltos de varias fichas
+
         }
     }
 }

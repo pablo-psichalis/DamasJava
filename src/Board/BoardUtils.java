@@ -37,7 +37,7 @@ public enum BoardUtils {
 
         tempMap.put("A2", 10);
         tempMap.put("C2", 4);
-        tempMap.put("E2", 50);
+        tempMap.put("E2", 30);
         tempMap.put("G2", 24);
 
         tempMap.put("B3", 3);
@@ -84,7 +84,7 @@ public enum BoardUtils {
 
         tempMap.put(10, "A2");
         tempMap.put(4, "C2");
-        tempMap.put(50, "E2");
+        tempMap.put(30, "E2");
         tempMap.put(24, "G2");
 
         tempMap.put(3, "B3");
